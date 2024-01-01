@@ -11,7 +11,7 @@ from sphero_sdk import SpheroRvrAsync
 # initialize global variables
 key_helper = KeyboardHelper()
 current_key_code = -1
-driving_keys = [119, 97, 115, 100, 32]
+driving_keys = [65, 68, 66, 67, 32]
 speed = 0
 heading = 0
 flags = 0
@@ -33,12 +33,15 @@ async def main():
     """
     Runs the main control loop for this demo.  Uses the KeyboardHelper class to read a keypress from the terminal.
 
-    W - Go forward.  Press multiple times to increase speed.
-    A - Decrease heading by -10 degrees with each key press.
-    S - Go reverse. Press multiple times to increase speed.
-    D - Increase heading by +10 degrees with each key press.
+    Up Arrow - Go forward.  Press multiple times to increase speed.
+    Left Arrow - Decrease heading by -10 degrees with each key press.
+    Down Arrow - Go reverse. Press multiple times to increase speed.
+    Right Arrow - Increase heading by +10 degrees with each key press.
     Spacebar - Reset speed and flags to 0. RVR will coast to a stop
 
+    Note, this isn't perfect. Arrow keys return three codes, but the
+    last one differentiates from other arrows. Passes testing.
+    
     """
     global current_key_code
     global speed
@@ -51,7 +54,7 @@ async def main():
 
     while True:
 
-        if current_key_code == 119:  # W
+        if current_key_code == 65:  # Up Arrow
             # if previously going reverse, reset speed back to 64
             if flags == 1:
                 speed = 64
@@ -60,9 +63,9 @@ async def main():
                 speed += 64
             # go forward
             flags = 0
-        elif current_key_code == 97:  # A
+        elif current_key_code == 68:  # Left Arrow
             heading -= 10
-        elif current_key_code == 115:  # S
+        elif current_key_code == 66:  # Down Arrow
             # if previously going forward, reset speed back to 64
             if flags == 0:
                 speed = 64
@@ -71,7 +74,7 @@ async def main():
                 speed += 64
             # go reverse
             flags = 1
-        elif current_key_code == 100:  # D
+        elif current_key_code == 67:  # Right Arrow
             heading += 10
         elif current_key_code == 32:  # SPACE
             # reset speed and flags, but don't modify heading.
